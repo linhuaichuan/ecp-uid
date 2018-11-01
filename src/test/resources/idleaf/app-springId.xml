@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 加载配置文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:uid/uid-default.properties,classpath*:config/uid.properties" />
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="transactionManager" />
+		<!--ISOLATION_DEFAULT 表示由使用的数据库决定 -->
+		<property name="isolationLevelName" value="ISOLATION_DEFAULT" />
+		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRED" />
+	</bean>
+	
+	<bean id="columnMaxValueIncrementer" abstract="true" class="com.myzmds.ecp.core.uid.spring.ColumnMaxValueIncrementer">
+		<constructor-arg name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="paddingLength" value="6"></property>
+	</bean>
+
+	<bean id="orderIncrementer" parent="columnMaxValueIncrementer">
+		<constructor-arg name="bizTag" value="order" />
+	</bean>
+	
+	<bean id="productNoIncrementer" parent="columnMaxValueIncrementer">
+		<constructor-arg name="bizTag" value="productNo" />
+	</bean>
+</beans>

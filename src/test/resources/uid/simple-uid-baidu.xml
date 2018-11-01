@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- UID generator -->
+    <bean id="simpleWorkerIdAssigner" class="com.myzmds.ecp.core.uid.worker.SimpleWorkerIdAssigner"/>
+
+    <bean id="defaultUidGenerator" class="com.myzmds.ecp.core.uid.baidu.impl.DefaultUidGenerator" lazy-init="false" scope="prototype" >
+        <property name="workerIdAssigner" ref="simpleWorkerIdAssigner"/>
+        <!-- Specified bits & epoch as your demand. No specified the default value will be used -->
+        <property name="timeBits" value="40"/>
+        <property name="workerBits" value="10"/>
+        <property name="seqBits" value="13"/>
+        <property name="epochStr" value="2016-09-20"/>
+    </bean>
+
+</beans>

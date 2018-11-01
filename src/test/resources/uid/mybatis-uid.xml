@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- Spring annotation扫描 -->
+	<context:component-scan base-package="com.myzmds.ecp.core.uid" />
+	<bean class="com.myzmds.ecp.core.uid.worker.dao.WorkerNodeDAO" />
+	<!-- 加载配置文件 -->
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:uid/uid-default.properties,classpath*:config/uid.properties" />
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 事务相关配置 -->
+	<tx:annotation-driven transaction-manager="transactionManager" order="1" />
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>

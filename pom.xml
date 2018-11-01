@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>ecp-uid</name>
+	<groupId>com.myzmds.ecp</groupId>
+    <artifactId>ecp-uid</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+	<developers>
+		<developer>
+			<id>linhch</id>
+			<name>庄梦蝶殇</name>
+			<email>linhuaichuan1989@126.com</email>
+			<url>http://myzmds.com/</url>
+		</developer>
+	</developers>
+
+	<properties>
+		<!-- 项目编码 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- jdk版本 -->
+		<java.version>1.8</java.version>
+		
+		<commons-lang3.version>3.5</commons-lang3.version>
+		<org.springframework.version>4.3.19.RELEASE</org.springframework.version>
+		<mysql.version>5.1.47</mysql.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<zk.version>0.10</zk.version>
+		<junit.version>4.12</junit.version>
+	</properties>
+
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<resources>
+			<!--打包资源文件 -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**</include>
+				</includes>
+			</resource>
+		</resources>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</testResource>
+		</testResources>
+		<pluginManagement>
+			<plugins>
+				<!-- 编译插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+				<!-- 资源插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<!-- 过滤后缀为pem、pfx的证书文件 -->
+						<nonFilteredFileExtensions>
+							<nonFilteredFileExtension>pem</nonFilteredFileExtension>
+							<nonFilteredFileExtension>jks</nonFilteredFileExtension>
+							<nonFilteredFileExtension>pfx</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+					</configuration>
+				</plugin>
+				<!-- jar插件 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+    
+    <!-- 覆盖super pom中central的设置，允许下载snapshot的构件 -->
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2</url>
+			<snapshots>
+				<!-- (可解决parent 版本为snapshot，子项目无法独立打包问题) -->
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+    <dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+		
+        <!-- Spring -->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${org.springframework.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- 代码直接调用log4j会被桥接到slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- 代码直接调用commons-logging会被桥接到slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- 代码直接调用java.util.logging会被桥接到slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+        
+        <!-- DB -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+            <optional>true</optional>
+        </dependency>
+        
+        <!-- zk -->
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>${zk.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+            <optional>true</optional>
+		</dependency>
+        
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

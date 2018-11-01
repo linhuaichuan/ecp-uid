@@ -1,6 +1,3 @@
-# ecp-uid
-居于美团leaf、百度UidGenerator、原生snowflake 进行整合的 唯一ID生成器
-
 一、介绍
 ==========================
    1、本项目为uid生成器，支持segment、snowflake、UidGenerator、spring四种策略生成id
