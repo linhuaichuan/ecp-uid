@@ -20,7 +20,8 @@
      
    2、baidu
       是 基于[百度UidGenerator](https://github.com/baidu/uid-generator)上的的优化策略。
-     <bean id="baiduUidStrategy" class="**.BaiduUidStrategy"/> 
+     	<bean id="baiduUidStrategy" class="**.BaiduUidStrategy"/> 
+     		 
      (1)、workerId提供策略
          * DisposableWorkerIdAssigner，利用数据库来管理生成workId，依赖数据库和spring-jdbc框架(需有jdbcTemplate的bean)。mysql表示例：
 		DROP TABLE IF EXISTS WORKER_NODE;
