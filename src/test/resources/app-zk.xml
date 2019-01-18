@@ -6,11 +6,20 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-	<!-- 加载配置文件 -->
-	<bean class="com.myzmds.ecp.core.uid.worker.ZkNodeWorkerIdAssigner" >
+		
+	<!-- zk -->
+	<bean class="com.myzmds.ecp.core.uid.worker.ZkWorkerIdAssigner" >
 		<property name="interval" value="3000" />
 		<property name="pidHome" value="F:\dump" />
 		<property name="zkAddress" value="172.16.51.123:2181" />
+		<property name="pidPort" value="60982" />
 	</bean>
 	
+	<!-- redis
+	<bean class="com.myzmds.ecp.core.uid.RedisConfig" />
+	<bean class="com.myzmds.ecp.core.uid.worker.RedisWorkIdAssigner" >
+		<property name="interval" value="3000" />
+		<property name="pidHome" value="F:\dump" />
+		<property name="pidPort" value="60982" />
+	</bean>-->
 </beans>

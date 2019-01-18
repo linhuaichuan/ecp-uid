@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.myzmds.ecp.core.uid.worker.ZkNodeWorkerIdAssigner;
+import com.myzmds.ecp.core.uid.worker.WorkerIdAssigner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/test/resources/app-zk.xml"})
 public class ZkNodeTest {
     @Autowired
-    private ZkNodeWorkerIdAssigner assigner;
+    private WorkerIdAssigner assigner;
     
     @Test
     public void testZkNode()

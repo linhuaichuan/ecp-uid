@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- UID generator -->
-    <bean id="zkNodeWorkerIdAssigner" class="com.myzmds.ecp.core.uid.worker.ZkNodeWorkerIdAssigner">
+    <bean id="zkWorkerIdAssigner" class="com.myzmds.ecp.core.uid.worker.ZkWorkerIdAssigner">
     	<property name="zkAddress" value="172.16.51.123:2181" />
     </bean>
 
     <bean id="defaultUidGenerator" class="com.myzmds.ecp.core.uid.baidu.impl.DefaultUidGenerator" lazy-init="false" scope="prototype" >
-        <property name="workerIdAssigner" ref="zkNodeWorkerIdAssigner"/>
+        <property name="workerIdAssigner" ref="zkWorkerIdAssigner"/>
 
         <!-- Specified bits & epoch as your demand. No specified the default value will be used -->
         <property name="timeBits" value="40"/>
