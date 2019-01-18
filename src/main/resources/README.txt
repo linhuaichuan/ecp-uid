@@ -35,9 +35,13 @@
          * SimpleWorkerIdAssigner ，固定了workId的提供。值为0.示例：
 			<bean id="simpleWorker" class="**.SimpleWorkerIdAssigner"/>
          
-         * ZkNodeWorkerIdAssigner ，利用zookeeper来实现wordId的提供管理，依赖了zk-client框架.示例：
-			<bean id="xkNodeWorker" class="**.ZkNodeWorkerIdAssigner"/>
+         * ZkWorkerIdAssigner ，利用zookeeper来实现wordId的提供管理，依赖了zk-client框架.示例：
+			<bean id="xkNodeWorker" class="**.ZkWorkerIdAssigner"/>
 			可设置interval-心跳间隔、pidHome-workerId文件存储目录、zkAddress-zk地址、pidPort-心跳端口
+         
+         * RedisWorkIdAssigner ，利用redis来实现wordId的提供管理，依赖了spring-data-redis框架的RedisTemplate.示例：
+			<bean id="xkNodeWorker" class="**.RedisWorkIdAssigner"/>
+			可设置interval-心跳间隔、pidHome-workerId文件存储目录、pidPort-心跳端口
          
      (2)、uid生成策略
          * DefaultUidGenerator 是Snowflake算法的变种，取消datacenterId, 并扩展了支持自定义workerId位数和初始化策略。
