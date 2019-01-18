@@ -44,11 +44,11 @@
 		<bean id="simpleWorker" class="**.SimpleWorkerIdAssigner"/>
          
          * ZkWorkerIdAssigner ，利用zookeeper来实现wordId的提供管理，依赖了zk-client框架.示例：
-		<bean id="xkNodeWorker" class="**.ZkWorkerIdAssigner"/>
+		<bean id="zkWorker" class="**.ZkWorkerIdAssigner"/>
 		可设置interval-心跳间隔、pidHome-workerId文件存储目录、zkAddress-zk地址、pidPort-心跳端口
          
          * RedisWorkIdAssigner ，利用redis来实现wordId的提供管理，依赖了spring-data-redis框架的RedisTemplate.示例：
-		<bean id="xkNodeWorker" class="**.RedisWorkIdAssigner"/>
+		<bean id="redisWorker" class="**.RedisWorkIdAssigner"/>
 		可设置interval-心跳间隔、pidHome-workerId文件存储目录、pidPort-心跳端口
 
      (2)、uid生成策略
