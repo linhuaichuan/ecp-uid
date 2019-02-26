@@ -136,8 +136,8 @@
    
    5、混淆算法
       是 基于 基因分库法这个理论扩展出来的混淆算法
--------------------
 三 、使用
+-------------------
      <bean class="**.UidContext">
          <property name="uidStrategy" ref="上述任何策略" />
          <property name="factor" value="可选：基因因子，如设置则启用混淆" />
