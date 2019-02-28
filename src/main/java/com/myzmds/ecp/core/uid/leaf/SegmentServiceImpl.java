@@ -1,30 +1,18 @@
 package com.myzmds.ecp.core.uid.leaf;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.locks.ReentrantLock;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
-
 /**
  * @类名称 SegmentServiceImpl.java
  * @类描述 <pre>Segment 策略id生成实现类</pre>
  * @作者 庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2018年9月6日 下午4:28:36
- * @版本 1.00
+ * @版本 1.0.1
  *
  * @修改记录
  * <pre>
  *     版本                       修改人 		修改日期 		 修改内容描述
  *     ----------------------------------------------
- *     1.00 	庄梦蝶殇 	2018年9月6日             
+ *     1.0.0    庄梦蝶殇    2018年9月6日             
+ *     1.0.1    庄梦蝶殇    2018年9月6日             修改
  *     ----------------------------------------------
  * </pre>
  */
@@ -80,20 +68,24 @@ public class SegmentServiceImpl implements ISegmentService {
     
     @Override
     public Long getId() {
+        // 1.0.1 fix:uid:ecp-190227001 #1(github)更改阈值(middle与max)lock在高速碰撞时的可能多次执行
+        Long nextId = null;//下一个id
         if (segment[index()].getMiddleId().equals(currentId.longValue()) || segment[index()].getMaxId().equals(currentId.longValue())) {
             try {
                 lock.lock();
                 if (segment[index()].getMiddleId().equals(currentId.longValue())) {
                     thresholdHandler();
+                    nextId = currentId.incrementAndGet();
                 }
                 if (segment[index()].getMaxId().equals(currentId.longValue())) {
                     fullHandler();
+                    nextId = currentId.incrementAndGet();
                 }
             } finally {
                 lock.unlock();
             }
         }
-        return currentId.incrementAndGet();// 原子类递增
+        return null == nextId ? currentId.incrementAndGet() : nextId;// 原子类递增
     }
     
     /**
