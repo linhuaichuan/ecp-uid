@@ -114,6 +114,11 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>osgeo</id>
+			<name>Open Source Geospatial Foundation Repository</name>
+			<url>http://download.osgeo.org/webdav/geotools/</url>
+		</repository>
 	</repositories>
 
     <dependencies>
@@ -206,6 +211,12 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
         </dependency>
+		<!-- junit 多线程测试 -->
+		<dependency>
+			<groupId>net.sourceforge.groboutils</groupId>
+			<artifactId>groboutils-core</artifactId>
+			<version>5</version>
+		</dependency> 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>

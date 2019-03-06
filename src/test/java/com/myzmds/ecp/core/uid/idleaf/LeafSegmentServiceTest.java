@@ -44,14 +44,15 @@ public class LeafSegmentServiceTest {
     
     @Test
     public void synGetId() {
-        while (true)
-            System.out.println(segmentServiceImpl.getId());
+        int i =0;
+        while (true) {
+            System.out.println(++i +" ：" + segmentServiceImpl.getId());
+        }
     }
     
     @Autowired
     private TransactionTemplate transactionTemplate;
     
-    @Test
     public void batchInsert() {
         
         List<Long> list = new ArrayList<Long>(1000);
@@ -94,7 +95,6 @@ public class LeafSegmentServiceTest {
         }
     }
     
-    @Test
     public void getId() {
         
         new Thread() {

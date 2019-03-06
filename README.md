@@ -124,7 +124,7 @@
 		MAX_ID BIGINT NOT NULL COMMENT '最大值',
 		LAST_UPDATE_TIME TIMESTAMP NOT NULL COMMENT '上次修改时间',
 		CURRENT_UPDATE_TIME TIMESTAMP NOT NULL COMMENT '当前修改时间',
-		PRIMARY KEY(ID)
+		PRIMARY KEY(BIZ_TAG)
 	  ) COMMENT='号段存储表',ENGINE = INNODB;
      
      (2)、支持 同步/异步两种更新数据库方式。可选配置asynLoadingSegment(true-异步，false-同步)，默认使用异步。
