@@ -14,7 +14,7 @@
 二、策略说明
 -------------------
    1、snowflake
-     snowflake 是基于Twitter[snowflake](https://github.com/twitter/snowflake) 算法的优化策略
+     snowflake 是基于Twitter [snowflake](https://github.com/twitter/snowflake) 算法的优化策略
      本策略优化了闰秒回拨处理、新增默认workId 与 datacenterId 的提供方法。
      <bean id="snowflakeUidStrategy" class="**.TwitterSnowflakeStrategy"/> 
      
@@ -113,7 +113,7 @@
 	   那么配置成```{"workerBits":27,"timeBits":30,"seqBits":6}```时, 可支持37个节点以整体并发量2400 UID/s的速度持续运行34年.
                            
    3、segment
-     segment 是基于美团[leaf-segment](https://tech.meituan.com/MT_Leaf.html) 的优化策略, 使用双Buffer实现。依赖数据库与spring-jdbc框架
+     是 基于美团[leaf-segment](https://tech.meituan.com/MT_Leaf.html) 的优化策略, 使用双Buffer实现。依赖数据库与spring-jdbc框架
      <bean id="leafUidStrategy" class="**.LeafSegmentStrategy"/> 
      
      (1)、SegmentServiceImpl 是具体实现类，数据库表结构为(mysql示例)：
