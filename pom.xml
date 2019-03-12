@@ -29,6 +29,8 @@
 		
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<org.springframework.version>4.3.19.RELEASE</org.springframework.version>
+		<org.springframework.data.version>1.8.15.RELEASE</org.springframework.data.version>
+		
 		<mysql.version>5.1.47</mysql.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<zk.version>0.10</zk.version>
@@ -157,22 +159,10 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
-		<!-- 代码直接调用log4j会被桥接到slf4j -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<!-- 代码直接调用commons-logging会被桥接到slf4j -->
+		<!-- 代码直接调用commons-logging会被桥接到slf4j(spring依赖) -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<!-- 代码直接调用java.util.logging会被桥接到slf4j -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jul-to-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
         
@@ -203,6 +193,13 @@
 			</exclusions>
             <optional>true</optional>
 		</dependency>
+		<!-- spring-redis -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${org.springframework.data.version}</version>
+			<optional>true</optional>
+		</dependency>
         
         <!-- Test -->
         <dependency>
@@ -216,6 +213,7 @@
 			<groupId>net.sourceforge.groboutils</groupId>
 			<artifactId>groboutils-core</artifactId>
 			<version>5</version>
+			<scope>test</scope>
 		</dependency> 
         <dependency>
             <groupId>org.springframework</groupId>
