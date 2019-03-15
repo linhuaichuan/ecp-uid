@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.myzmds.ecp.core.uid.baidu.UidGenerator;
+import com.myzmds.ecp.core.uid.baidu.UidGeneratorProvider;
 import com.myzmds.ecp.core.uid.extend.annotation.UidModel;
-import com.myzmds.ecp.core.uid.util.SpringUtils;
 
 /**
  * baidu uid生成策略
@@ -26,13 +26,16 @@ import com.myzmds.ecp.core.uid.util.SpringUtils;
  *     ----------------------------------------------
  * </pre>
  */
-public class BaiduUidStrategy implements IUidStrategy{
+public class BaiduUidStrategy implements IUidStrategy {
     
     private static Map<String, UidGenerator> generatorMap = new HashMap<>();
     
     @Autowired
     private UidGenerator uidGenerator;
-
+    
+    @Autowired
+    private UidGeneratorProvider provider;
+    
     @Override
     public UidModel getName() {
         return UidModel.baidu;
@@ -42,8 +45,6 @@ public class BaiduUidStrategy implements IUidStrategy{
      * 获取uid生成器
      * @方法名称 getUidGenerator
      * @功能描述 <pre>获取uid生成器</pre>
-     * @作者    庄梦蝶殇
-     * @创建时间 2018年4月27日 下午8:50:57
      * @param prefix 前缀
      * @return uid生成器
      */
@@ -55,7 +56,7 @@ public class BaiduUidStrategy implements IUidStrategy{
         if (null == generator) {
             synchronized (generatorMap) {
                 if (null == generator) {
-                    generator = SpringUtils.getBean(UidGenerator.class);
+                    generator = provider.get();
                 }
                 generatorMap.put(prefix, generator);
             }
@@ -71,5 +72,21 @@ public class BaiduUidStrategy implements IUidStrategy{
     @Override
     public String parseUID(long uid, String group) {
         return getUidGenerator(group).parseUID(uid);
+    }
+
+    public UidGenerator getUidGenerator() {
+        return uidGenerator;
+    }
+
+    public void setUidGenerator(UidGenerator uidGenerator) {
+        this.uidGenerator = uidGenerator;
+    }
+
+    public UidGeneratorProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(UidGeneratorProvider provider) {
+        this.provider = provider;
     }
 }
