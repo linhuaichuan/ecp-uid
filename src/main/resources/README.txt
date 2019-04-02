@@ -35,7 +35,7 @@
          * SimpleWorkerIdAssigner ，固定了workId的提供。值为0.示例：
 			<bean id="simpleWorker" class="**.SimpleWorkerIdAssigner"/>
          
-         * ZkWorkerIdAssigner ，利用zookeeper来实现wordId的提供管理，依赖了zk-client框架.示例：
+         * ZkWorkerIdAssigner ，利用zookeeper来实现wordId的提供管理，依赖原生Zookeeper驱动包.示例：
 			<bean id="xkNodeWorker" class="**.ZkWorkerIdAssigner"/>
 			可设置interval-心跳间隔、pidHome-workerId文件存储目录、zkAddress-zk地址、pidPort-心跳端口
          

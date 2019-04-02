@@ -101,10 +101,7 @@ public abstract class AbstractIntervalWorkId implements WorkerIdAssigner, Initia
             public void run() {
                 while (active.get() == true) {
                     if (where()) {
-                        try {
-                            report();
-                        } catch (Exception e) {
-                        }
+                        report();
                     }
                     try {
                         Thread.sleep(interval);
@@ -119,8 +116,17 @@ public abstract class AbstractIntervalWorkId implements WorkerIdAssigner, Initia
         heartBeat.start();
     }
     
+    /**
+     * @方法名称 where
+     * @功能描述 <pre>心跳条件</pre>
+     * @return true:执行心跳上报，false:空动作
+     */
     public abstract boolean where();
     
+    /**
+     * @方法名称 report
+     * @功能描述 <pre>心跳上报</pre>
+     */
     public abstract void report();
     
     @Override
