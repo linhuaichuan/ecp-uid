@@ -8,7 +8,7 @@ import com.myzmds.ecp.core.uid.baidu.UidGenerator;
 /**
  * @类名称 UidGeneratorProvider.java
  * @类描述 <pre>UidGenerator多例对象提供器</pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者 庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年3月15日 下午2:05:47
  * @版本 1.0.0
  *
