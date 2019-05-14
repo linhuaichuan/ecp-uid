@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.myzmds.ecp.core.uid.extend.annotation.UidModel;
 import com.myzmds.ecp.core.uid.twitter.SnowflakeIdWorker;
 import com.myzmds.ecp.core.uid.util.NetUtils;
+import com.myzmds.ecp.core.uid.worker.WorkerIdAssigner;
 
 /**
  * @类名称 TwitterSnowflakeStrategy.java
@@ -33,11 +34,13 @@ public class TwitterSnowflakeStrategy implements IUidStrategy {
      * 机器ID
      */
     private Long workerId;
-
+    
     /**
      * 数据中心id
      */
     private Long datacenterId;
+    
+    protected WorkerIdAssigner assigner;
     
     @Override
     public UidModel getName() {
@@ -53,7 +56,7 @@ public class TwitterSnowflakeStrategy implements IUidStrategy {
     public String parseUID(long uid, String group) {
         return getSnowflakeId(group).parseUID(uid);
     }
-
+    
     /**
      * 获取uid生成器
      * @方法名称 getSnowflakeId
@@ -69,7 +72,14 @@ public class TwitterSnowflakeStrategy implements IUidStrategy {
                     // 数据中心id--默认取机器码
                     Long realDid = null == datacenterId ? getMachineNum(31) : datacenterId;
                     // 机器id--默认取进程id
-                    long realWid = null == workerId ? getProcessNum(realDid, 31) : workerId;
+                    long realWid;
+                    if (null != assigner) {
+                        realWid = assigner.assignWorkerId();
+                    } else if (null != workerId) {
+                        realWid = workerId;
+                    } else {
+                        realWid = getProcessNum(realDid, 31);
+                    }
                     snowflakeIdWorker = new SnowflakeIdWorker(realWid, realDid);
                     snowflakeIdWorker.setClock(true);
                 }
@@ -112,6 +122,7 @@ public class TwitterSnowflakeStrategy implements IUidStrategy {
         // dataCenterId + PID 的 hashcode 获取16个低位
         return (mpid.toString().hashCode() & 0xffff) % (maxWorkerId + 1);
     }
+    
     public Long getWorkerId() {
         return workerId;
     }
@@ -126,5 +137,9 @@ public class TwitterSnowflakeStrategy implements IUidStrategy {
     
     public void setDatacenterId(Long datacenterId) {
         this.datacenterId = datacenterId;
+    }
+
+    public void setAssigner(WorkerIdAssigner assigner) {
+        this.assigner = assigner;
     }
 }

@@ -34,7 +34,7 @@ public class LeafSegmentStrategy implements IUidStrategy {
     protected static Map<String, ISegmentService> generatorMap = new ConcurrentHashMap<>();
     
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
     
     private boolean asynLoadingSegment = true;
     
@@ -79,5 +79,9 @@ public class LeafSegmentStrategy implements IUidStrategy {
 
     public void setAsynLoadingSegment(boolean asynLoadingSegment) {
         this.asynLoadingSegment = asynLoadingSegment;
+    }
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 }

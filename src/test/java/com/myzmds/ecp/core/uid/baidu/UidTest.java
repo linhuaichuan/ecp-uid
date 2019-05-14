@@ -26,6 +26,7 @@ public class UidTest {
         System.out.println("one:" + uidOne.parseUID(uid));
         
         Runnable threadOne= new  Runnable() {
+            @Override
             public void run() {
                 for (int i = 0; i < 10; i++) {
                     System.out.println("one:" + uidOne.getUID());
@@ -34,6 +35,7 @@ public class UidTest {
         };
 
         Runnable threadTwo= new  Runnable() {
+            @Override
             public void run() {
                 for (int i = 0; i < 10; i++) {
                     System.out.println("two:" + uidTwo.getUID());

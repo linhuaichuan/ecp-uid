@@ -26,7 +26,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  *
  * @author yutianbao
  */
-public abstract class DateUtils extends org.apache.commons.lang3.time.DateUtils {
+public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     /**
      * Patterns
      */

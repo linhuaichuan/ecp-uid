@@ -8,12 +8,15 @@
 ==========================
    1、snowflake
      snowflake 是基于Twitter[snowflake](https://github.com/twitter/snowflake) 算法的优化策略
-             本策略优化了闰秒回拨处理、新增默认workId 与 datacenterId 的提供方法。
-     <bean id="snowflakeUidStrategy" class="**.TwitterSnowflakeStrategy"/> 
+     本策略优化了闰秒回拨处理、新增默认workId(可复用baidu-workerId策略) 与 datacenterId 的提供方法。
+     <bean id="snowflakeUidStrategy" class="**.TwitterSnowflakeStrategy"> 
+           <property name="assigner" ref="disposableWorkerIdAssigner" /><!-- 可选 -->
+     </bean> 
      
    2、baidu
-             是 基于[百度UidGenerator](https://github.com/baidu/uid-generator)上的的优化策略。
+     是 基于[百度UidGenerator](https://github.com/baidu/uid-generator)上的的优化策略。
      <bean id="baiduUidStrategy" class="**.BaiduUidStrategy"/> 
+     		 
      (1)、workerId提供策略
          * DisposableWorkerIdAssigner，利用数据库来管理生成workId，依赖数据库和spring-jdbc框架(需有jdbcTemplate的bean)。mysql表示例：
 			DROP TABLE IF EXISTS WORKER_NODE;
@@ -26,7 +29,7 @@
 				MODIFIED TIMESTAMP NOT NULL COMMENT '修改时间',
 				CREATED TIMESTAMP NOT NULL COMMENT '创建时间',
 				PRIMARY KEY(ID)
-			) COMMENT='DB WorkerID Assigner for UID Generator',ENGINE = INNODB;
+			) COMMENT='Uid WorkerId 存储表',ENGINE = INNODB;
 			 
 			示例：
 			<bean id="disposableWorker" class="**.DisposableWorkerIdAssigner"/>
@@ -36,11 +39,11 @@
 			<bean id="simpleWorker" class="**.SimpleWorkerIdAssigner"/>
          
          * ZkWorkerIdAssigner ，利用zookeeper来实现wordId的提供管理，依赖原生Zookeeper驱动包.示例：
-			<bean id="xkNodeWorker" class="**.ZkWorkerIdAssigner"/>
+			<bean id="zkWorker" class="**.ZkWorkerIdAssigner"/>
 			可设置interval-心跳间隔、pidHome-workerId文件存储目录、zkAddress-zk地址、pidPort-心跳端口
          
-         * RedisWorkIdAssigner ，利用redis来实现wordId的提供管理，依赖了spring-data-redis框架的RedisTemplate.示例：
-			<bean id="xkNodeWorker" class="**.RedisWorkIdAssigner"/>
+         * RedisWorkIdAssigner ，利用redis来实现wordId的提供管理，依赖了spring-data-redis框架(依赖注入RedisTemplate).示例：
+			<bean id="redisWorker" class="**.RedisWorkIdAssigner"/>
 			可设置interval-心跳间隔、pidHome-workerId文件存储目录、pidPort-心跳端口
          
      (2)、uid生成策略
@@ -116,7 +119,7 @@
 				MAX_ID BIGINT NOT NULL COMMENT '最大值',
 				LAST_UPDATE_TIME TIMESTAMP NOT NULL COMMENT '上次修改时间',
 				CURRENT_UPDATE_TIME TIMESTAMP NOT NULL COMMENT '当前修改时间',
-				PRIMARY KEY(ID)
+				PRIMARY KEY(BIZ_TAG)
 			) COMMENT='号段存储表',ENGINE = INNODB;
      
      (2)、支持 同步/异步两种更新数据库方式。可选配置asynLoadingSegment(true-异步，false-同步)，默认使用异步。
@@ -127,7 +130,10 @@
              是 基于 segment策略提供给spring 增量实现。非直接使用的策略
    
    5、混淆算法
-             是 基于 基因分库法这个理论扩展出来的混淆算法
+             是 基于 基因分库法这个理论扩展出来的混淆算法   
+
+三 、使用
+-------------------
      <bean class="**.UidContext">
          <property name="uidStrategy" ref="上述任何策略" />
          <property name="factor" value="可选：基因因子，如设置则启用混淆" />

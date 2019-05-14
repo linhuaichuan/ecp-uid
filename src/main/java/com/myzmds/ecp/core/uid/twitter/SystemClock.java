@@ -1,11 +1,12 @@
 package com.myzmds.ecp.core.uid.twitter;
 
 import java.sql.Timestamp;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+
+import com.myzmds.ecp.core.uid.baidu.utils.NamingThreadFactory;
 
 /**
  * 高并发场景下System.currentTimeMillis()的性能问题的优化
@@ -29,6 +30,11 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author lry
  */
 public class SystemClock {
+
+    /**
+     * 线程名--系统时钟
+     */
+    public static final String THREAD_CLOCK_NAME="System Clock";
     
     private final long period;
     
@@ -49,17 +55,9 @@ public class SystemClock {
     }
     
     private void scheduleClockUpdating() {
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
-            public Thread newThread(Runnable runnable) {
-                Thread thread = new Thread(runnable, "System Clock");
-                thread.setDaemon(true);
-                return thread;
-            }
-        });
-        scheduler.scheduleAtFixedRate(new Runnable() {
-            public void run() {
-                now.set(System.currentTimeMillis());
-            }
+        ScheduledExecutorService scheduledpool = new ScheduledThreadPoolExecutor(1, new NamingThreadFactory(THREAD_CLOCK_NAME, true));
+        scheduledpool.scheduleAtFixedRate(() -> {
+            now.set(System.currentTimeMillis());
         }, period, period, TimeUnit.MILLISECONDS);
     }
     

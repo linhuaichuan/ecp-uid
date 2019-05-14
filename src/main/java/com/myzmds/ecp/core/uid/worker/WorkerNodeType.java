@@ -25,9 +25,15 @@ import com.myzmds.ecp.core.uid.baidu.utils.ValuedEnum;
  * @author yutianbao
  */
 public enum WorkerNodeType implements ValuedEnum<Integer> {
-
-    CONTAINER(1), ACTUAL(2);
-
+    /**
+     * docker容器节点
+     */
+    CONTAINER(1),
+    /**
+     * 普通节点
+     */
+    ACTUAL(2);
+    
     /**
      * Lock type
      */

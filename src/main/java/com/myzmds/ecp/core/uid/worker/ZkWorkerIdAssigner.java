@@ -2,7 +2,6 @@ package com.myzmds.ecp.core.uid.worker;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.text.DecimalFormat;
 import java.util.List;
 
 import org.apache.zookeeper.CreateMode;
@@ -156,8 +155,6 @@ public class ZkWorkerIdAssigner extends AbstractIntervalWorkId {
     public boolean where() {
         return null != workerId && null != zkClient;
     }
-    
-    static final DecimalFormat df = new DecimalFormat("");
     
     @Override
     public void report() {

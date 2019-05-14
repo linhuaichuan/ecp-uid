@@ -74,12 +74,13 @@ public class LeafSegmentServiceTest {
                 @Override
                 public Integer doInTransaction(TransactionStatus status) {
                     jdbcTemplate.batchUpdate("insert into id_test(p_id) values(?)", new BatchPreparedStatementSetter() {
+                        @Override
                         public void setValues(PreparedStatement ps, int i)
                             throws SQLException {
                             Long insertedId = insertedList.get(i);
                             ps.setLong(1, insertedId);
                         }
-                        
+                        @Override
                         public int getBatchSize() {
                             return insertedList.size();
                         }
@@ -96,8 +97,8 @@ public class LeafSegmentServiceTest {
     }
     
     public void getId() {
-        
         new Thread() {
+            @Override
             public void run() {
                 List<Long> list = new ArrayList<Long>(10000);
                 while (true) {
@@ -116,12 +117,13 @@ public class LeafSegmentServiceTest {
                                 @Override
                                 public Integer doInTransaction(TransactionStatus status) {
                                     jdbcTemplate.batchUpdate("insert into id_test(p_id) values(?)", new BatchPreparedStatementSetter() {
+                                        @Override
                                         public void setValues(PreparedStatement ps, int i)
                                             throws SQLException {
                                             Long insertedId = insertedList.get(i);
                                             ps.setLong(1, insertedId);
                                         }
-                                        
+                                        @Override
                                         public int getBatchSize() {
                                             return insertedList.size();
                                         }

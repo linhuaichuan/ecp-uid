@@ -39,7 +39,7 @@ public class RedisWorkIdAssigner extends AbstractIntervalWorkId {
     public static final String UID_TEMPORARY = UID_ROOT.concat("temporary:");
     
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<Object, Object> redisTemplate;
     
     @Override
     public long action() {

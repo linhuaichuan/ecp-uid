@@ -5,13 +5,17 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+
+import com.myzmds.ecp.core.uid.baidu.utils.NamingThreadFactory;
 
 /**
  * @类名称 SegmentServiceImpl.java
@@ -31,6 +35,11 @@ import org.springframework.jdbc.core.RowCallbackHandler;
  * </pre>
  */
 public class SegmentServiceImpl implements ISegmentService {
+    
+    /**
+     * 线程名-心跳
+     */
+    public static final String THREAD_BUFFER_NAME = "leaf_buffer_sw";
     
     private static ReentrantLock lock = new ReentrantLock();
     
@@ -72,7 +81,7 @@ public class SegmentServiceImpl implements ISegmentService {
     public SegmentServiceImpl(JdbcTemplate jdbcTemplate, String bizTag) {
         this.jdbcTemplate = jdbcTemplate;
         if (taskExecutor == null) {
-            taskExecutor = Executors.newSingleThreadExecutor();
+            taskExecutor = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), new NamingThreadFactory(THREAD_BUFFER_NAME));
         }
         this.bizTag = bizTag;
         segment[0] = doUpdateNextSegment(bizTag);// 获取第一段buffer缓冲
@@ -178,7 +187,8 @@ public class SegmentServiceImpl implements ISegmentService {
         final IdSegment currentSegment = new IdSegment();
         this.jdbcTemplate.query(querySql, new String[] {bizTag}, new RowCallbackHandler() {
             @Override
-            public void processRow(ResultSet rs) throws SQLException {
+            public void processRow(ResultSet rs)
+                throws SQLException {
                 Long step = null;
                 Long currentMaxId = null;
                 step = rs.getLong("step");
@@ -225,6 +235,7 @@ public class SegmentServiceImpl implements ISegmentService {
         this.jdbcTemplate = jdbcTemplate;
     }
     
+    @Override
     public void setBizTag(String bizTag) {
         this.bizTag = bizTag;
     }

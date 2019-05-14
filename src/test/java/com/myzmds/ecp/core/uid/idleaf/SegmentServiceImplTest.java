@@ -14,7 +14,7 @@ import net.sourceforge.groboutils.junit.v1.TestRunnable;
 /**
  * @类名称 SegmentServiceImplTest.java
  * @类描述 <pre>Segment多线程并发测试</pre>
- * @作者  庄梦蝶殇 linhuaichuan1989@126.com
+ * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
  * @创建时间 2019年3月6日 下午4:42:59
  * @版本 1.0.0
  *
@@ -43,7 +43,7 @@ public class SegmentServiceImplTest extends Thread {
             }
         };
         // 开13，23，43个线程进行测试,step设置为10
-        int runnerCount = 23;
+        int runnerCount = 43;
         TestRunnable[] trs = new TestRunnable[runnerCount];
         for (int i = 0; i < runnerCount; i++) {
             trs[i] = runner;

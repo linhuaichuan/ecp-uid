@@ -17,8 +17,10 @@ package com.myzmds.ecp.core.uid.baidu.buffer;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -86,11 +88,11 @@ public class BufferPaddingExecutor {
 
         // initialize thread pool
         int cores = Runtime.getRuntime().availableProcessors();
-        bufferPadExecutors = Executors.newFixedThreadPool(cores * 2, new NamingThreadFactory(WORKER_NAME));
+        bufferPadExecutors = new ThreadPoolExecutor(cores * 2, cores * 2, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), new NamingThreadFactory(WORKER_NAME));
 
         // initialize schedule thread
         if (usingSchedule) {
-            bufferPadSchedule = Executors.newSingleThreadScheduledExecutor(new NamingThreadFactory(SCHEDULE_NAME));
+            bufferPadSchedule = new ScheduledThreadPoolExecutor(1, new NamingThreadFactory(SCHEDULE_NAME, true));
         } else {
             bufferPadSchedule = null;
         }
