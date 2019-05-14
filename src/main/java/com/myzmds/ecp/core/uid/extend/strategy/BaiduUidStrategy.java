@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.util.StringUtils;
 
 import com.myzmds.ecp.core.uid.baidu.UidGenerator;
-import com.myzmds.ecp.core.uid.baidu.UidGeneratorProvider;
 import com.myzmds.ecp.core.uid.extend.annotation.UidModel;
 
 /**
@@ -33,9 +33,6 @@ public class BaiduUidStrategy implements IUidStrategy {
     @Autowired
     private UidGenerator uidGenerator;
     
-    @Autowired
-    private UidGeneratorProvider provider;
-    
     @Override
     public UidModel getName() {
         return UidModel.baidu;
@@ -56,7 +53,7 @@ public class BaiduUidStrategy implements IUidStrategy {
         if (null == generator) {
             synchronized (generatorMap) {
                 if (null == generator) {
-                    generator = provider.get();
+                    generator = getGenerator();
                 }
                 generatorMap.put(prefix, generator);
             }
@@ -73,6 +70,16 @@ public class BaiduUidStrategy implements IUidStrategy {
     public String parseUID(long uid, String group) {
         return getUidGenerator(group).parseUID(uid);
     }
+    
+    /**
+     * @方法名称 getGenerator
+     * @功能描述 <pre>多实例返回uidGenerator(返回值不重要，动态注入)</pre>
+     * @return
+     */
+    @Lookup
+    public UidGenerator getGenerator() {
+      return null;
+    }
 
     public UidGenerator getUidGenerator() {
         return uidGenerator;
@@ -80,13 +87,5 @@ public class BaiduUidStrategy implements IUidStrategy {
 
     public void setUidGenerator(UidGenerator uidGenerator) {
         this.uidGenerator = uidGenerator;
-    }
-
-    public UidGeneratorProvider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(UidGeneratorProvider provider) {
-        this.provider = provider;
     }
 }
