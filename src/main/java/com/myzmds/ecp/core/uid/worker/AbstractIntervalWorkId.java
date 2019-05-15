@@ -14,8 +14,8 @@ import com.myzmds.ecp.core.uid.util.WorkerIdUtils;
 
 /**
  * @类名称 AbstractIntervalWorkId.java
- * @类描述 <pre></pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @类描述 <pre>WorkId生成基类</pre>
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年1月17日 下午4:21:17
  * @版本 1.0.0
  *

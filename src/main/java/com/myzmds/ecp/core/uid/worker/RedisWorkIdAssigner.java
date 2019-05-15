@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 /**
  * @类名称 RedisWorkIdAssigner.java
  * @类描述 <pre>Redis编号分配器</pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年1月16日 下午3:32:07
  * @版本 1.0.1
  *

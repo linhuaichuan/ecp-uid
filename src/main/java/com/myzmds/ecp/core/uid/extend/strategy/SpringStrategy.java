@@ -7,7 +7,7 @@ import com.myzmds.ecp.core.uid.spring.ColumnMaxValueIncrementer;
 /**
  * @类名称 SpringStrategy.java
  * @类描述 <pre>spring 分段批量Id策略(可配置asynLoadingSegment-异步标识)</pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年3月15日 下午7:48:58
  * @版本 1.0.0
  *

@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 /**
  * @类名称 WorkerIdUtils.java
  * @类描述 <pre>workid 文件操作类</pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年1月16日 下午2:31:31
  * @版本 1.0.0
  *
