@@ -1,11 +1,11 @@
 package com.myzmds.ecp.core.uid.baidu;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.StringUtils;
 
 import com.myzmds.ecp.core.uid.baidu.UidGenerator;
 import com.myzmds.ecp.core.uid.baidu.impl.CachedUidGenerator;
@@ -124,7 +124,7 @@ public class CachedUidGeneratorTest {
 
         // Check UID is positive, and can be parsed
         Assert.assertTrue(uid > 0L);
-        Assert.assertTrue(StringUtils.isNotBlank(parsedInfo));
+        Assert.assertTrue(!StringUtils.isEmpty(parsedInfo));
 
         if (VERBOSE) {
             System.out.println(Thread.currentThread().getName() + " No." + index + " >>> " + parsedInfo);

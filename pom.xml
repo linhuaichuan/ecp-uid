@@ -35,6 +35,7 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<zookeeper.version>3.4.14</zookeeper.version>
 
+		<lombok.version>1.18.4</lombok.version>
 		<junit.version>4.12</junit.version>
 	</properties>
 
@@ -125,12 +126,6 @@
 	</repositories>
 
     <dependencies>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
-		
         <!-- Spring -->
         <dependency>
 			<groupId>org.springframework</groupId>
@@ -167,6 +162,12 @@
 			<version>${slf4j.version}</version>
 		</dependency>
         
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
         <!-- DB -->
         <dependency>
             <groupId>org.springframework</groupId>

@@ -18,10 +18,10 @@ package com.myzmds.ecp.core.uid.baidu.impl;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.StringUtils;
 
 import com.myzmds.ecp.core.uid.baidu.BitsAllocator;
 import com.myzmds.ecp.core.uid.baidu.UidGenerator;
@@ -210,7 +210,7 @@ public class DefaultUidGenerator implements UidGenerator, InitializingBean {
     }
 
     public void setEpochStr(String epochStr) {
-        if (StringUtils.isNotBlank(epochStr)) {
+        if (!StringUtils.isEmpty(epochStr)) {
             this.epochStr = epochStr;
             this.epochSeconds = TimeUnit.MILLISECONDS.toSeconds(DateUtils.parseByDayPattern(epochStr).getTime());
         }

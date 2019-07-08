@@ -1,8 +1,9 @@
 package com.myzmds.ecp.core.uid.worker;
 
+import java.util.Random;
+
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import com.myzmds.ecp.core.uid.worker.entity.WorkerNode;
 
 /**
  * DB编号分配器(利用数据库来管理)
+ * @author yutianbao
  */
 public class DisposableWorkerIdAssigner implements WorkerIdAssigner {
     private static final Logger LOGGER = LoggerFactory.getLogger(DisposableWorkerIdAssigner.class);
@@ -28,7 +30,7 @@ public class DisposableWorkerIdAssigner implements WorkerIdAssigner {
      * 
      * @return assigned worker id
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public long assignWorkerId() {
         // build worker node entity
@@ -54,10 +56,11 @@ public class DisposableWorkerIdAssigner implements WorkerIdAssigner {
         } else {
             workerNodeEntity.setType(WorkerNodeType.ACTUAL.value());
             workerNodeEntity.setHostName(NetUtils.getLocalInetAddress().getHostAddress());
-            workerNodeEntity.setPort(System.currentTimeMillis() + "-" + RandomUtils.nextInt(0, 100000));
+            workerNodeEntity.setPort(System.currentTimeMillis() + "-" + RANDOM.nextInt(100000));
         }
 
         return workerNodeEntity;
     }
-
+    
+    private static final Random RANDOM = new Random();
 }

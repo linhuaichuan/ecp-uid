@@ -17,16 +17,16 @@ package com.myzmds.ecp.core.uid.worker.entity;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import com.myzmds.ecp.core.uid.worker.WorkerNodeType;
+
+import lombok.ToString;
 
 /**
  * Entity for M_WORKER_NODE
  *
  * @author yutianbao
  */
+@ToString
 public class WorkerNode {
 
     /**
@@ -122,10 +122,4 @@ public class WorkerNode {
     public void setModified(Date modified) {
         this.modified = modified;
     }
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
 }
