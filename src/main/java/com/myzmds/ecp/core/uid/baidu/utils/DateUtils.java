@@ -39,11 +39,6 @@ public class DateUtils {
     public static final String DATETIME_MS_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
     
     /**
-     * 默认日期
-     */
-    public static final Date DEFAULT_DATE = DateUtils.parseByDayPattern("1970-01-01");
-    
-    /**
      * 加锁的df集合
      */
     private static ThreadLocal<Map<String, DateFormat>> dfMap = new ThreadLocal<Map<String, DateFormat>>() {
