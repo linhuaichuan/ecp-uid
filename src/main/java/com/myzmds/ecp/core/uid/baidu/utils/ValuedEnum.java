@@ -23,5 +23,9 @@ package com.myzmds.ecp.core.uid.baidu.utils;
  * @author yutianbao
  */
 public interface ValuedEnum<T> {
+    /**
+     * 获取值
+     * @return 枚举映射的值
+     */
     T value();
 }

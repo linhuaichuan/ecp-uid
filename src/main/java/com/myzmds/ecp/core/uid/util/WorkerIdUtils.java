@@ -34,7 +34,8 @@ public class WorkerIdUtils {
      */
     public static String getPidName(Integer pidPort, ServerSocket socket) {
         String pidName = NetUtils.getLocalInetAddress().getHostAddress();
-        if (-1 != pidPort) {// 占用端口
+        if (-1 != pidPort) {
+            // 占用端口
             pidPort = null != pidPort && pidPort > 0 ? pidPort : NetUtils.getAvailablePort();
             try {
                 socket = new ServerSocket(pidPort);

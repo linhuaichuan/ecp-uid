@@ -18,11 +18,13 @@ package com.myzmds.ecp.core.uid.leaf;
 public interface ISegmentService {
     /**
      * 获取id
+     * @return id
      */
     public Long getId();
 
     /**
      * 设置业务标识
+     * @param bizTag 业务标识
      */
     public void setBizTag(String bizTag);
 }

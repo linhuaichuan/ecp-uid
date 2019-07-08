@@ -70,7 +70,8 @@ public class NetUtils {
             if (interfaces != null) {
                 while (interfaces.hasMoreElements()) {
                     NetworkInterface network = interfaces.nextElement();
-                    if (network.isLoopback()) {// 排除loopback类型地址
+                    if (network.isLoopback()) {
+                        // 排除loopback类型地址
                         continue;
                     }
                     Enumeration<InetAddress> addresses = network.getInetAddresses();
@@ -91,7 +92,7 @@ public class NetUtils {
         }
         return null;
     }
-
+    
     /**
      * 获取机器码
      */
@@ -110,7 +111,7 @@ public class NetUtils {
         }
         return null;
     }
-
+    
     /**
      * 是否有效地址
      */
@@ -121,11 +122,11 @@ public class NetUtils {
         String name = address.getHostAddress();
         return (name != null && !ANYHOST.equals(name) && !LOCALHOST.equals(name) && IP_PATTERN.matcher(name).matches());
     }
-
+    
     public static int getRandomPort() {
         return RND_PORT_START + RANDOM.nextInt(RND_PORT_RANGE);
     }
-
+    
     public static int getAvailablePort() {
         ServerSocket ss = null;
         try {

@@ -149,7 +149,9 @@ public class RingBuffer {
         return true;
     }
     
-    //cursor.updateAndGet(old -> old == tail.get() ? old : old + 1)
+    /**
+     * cursor.updateAndGet(old -> old == tail.get() ? old : old + 1)
+     */
     public final long updateAndGet() {
         long prev, next;
         do {

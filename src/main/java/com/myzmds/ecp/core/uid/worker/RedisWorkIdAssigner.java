@@ -60,7 +60,8 @@ public class RedisWorkIdAssigner extends AbstractIntervalWorkId {
             // b、 不存在，创建ip:port节点
             if (null == workerId) {
                 workerId = (long)uidWork.size();
-                redisTemplate.opsForZSet().add(UID_FOREVER, pidName, System.currentTimeMillis());// 使用zset 时间排序，保证有序性
+                // 使用zset 时间排序，保证有序性
+                redisTemplate.opsForZSet().add(UID_FOREVER, pidName, System.currentTimeMillis());
                 uidWork.add(pidName);
             }
         }

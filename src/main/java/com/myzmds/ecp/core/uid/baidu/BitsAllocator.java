@@ -15,9 +15,9 @@
  */
 package com.myzmds.ecp.core.uid.baidu;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.util.Assert;
+
+import lombok.ToString;
 
 /**
  * Allocate 64 bits for the UID(long)<br>
@@ -25,6 +25,7 @@ import org.springframework.util.Assert;
  * 
  * @author yutianbao
  */
+@ToString
 public class BitsAllocator {
     /**
      * Total 64 bits
@@ -127,10 +128,4 @@ public class BitsAllocator {
     public int getWorkerIdShift() {
         return workerIdShift;
     }
-    
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-    
 }

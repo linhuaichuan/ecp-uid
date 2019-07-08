@@ -42,6 +42,9 @@ import java.util.Date;
  */
 public class SnowflakeIdWorker {    
     // ============================== Constants===========================================
+    /**
+     * 回拨超时错误
+     */
     private final static String ERROR_CLOCK_BACK = "时间回拨，拒绝为超出%d毫秒生成ID";
     
     private final static String ERROR_ATTR_LIMIT = "%s属性的范围为0-%d";
@@ -131,7 +134,7 @@ public class SnowflakeIdWorker {
             if (offset <= 5) {
                 try {
                     // 时间偏差大小小于5ms，则等待两倍时间
-                    wait(offset << 1);// wait
+                    wait(offset << 1);
                     timestamp = timeGen();
                     if (timestamp < lastTimestamp) {
                         // 还是小于，抛异常并上报
@@ -167,10 +170,7 @@ public class SnowflakeIdWorker {
          * 2.然后对每个左移后的值(la、lb、lc、sequence)做位或运算，是为了把各个短的数据合并起来，合并成一个二进制数
          * 3.最后转换成10进制，就是最终生成的id(64位的ID)
          */
-        return ((timestamp - twepoch) << timestampLeftShift) //
-            | (datacenterId << datacenterIdShift) //
-            | (workerId << workerIdShift) //
-            | sequence;
+        return ((timestamp - twepoch) << timestampLeftShift) | (datacenterId << datacenterIdShift) | (workerId << workerIdShift) | sequence;
     }
     
     /**
@@ -178,9 +178,12 @@ public class SnowflakeIdWorker {
      * @功能描述 <pre>反解析UID</pre>
      */
     public String parseUID(Long uid) {
-        long totalBits = 64L;// 总位数
-        long signBits = 1L;// 标识
-        long timestampBits = 41L;// 时间戳
+        // 总位数
+        long totalBits = 64L;
+        // 标识
+        long signBits = 1L;
+        // 时间戳
+        long timestampBits = 41L;
         // 解析Uid：标识 -- 时间戳 -- 数据中心 -- 机器码 --序列
         long sequence = (uid << (totalBits - sequenceBits)) >>> (totalBits - sequenceBits);
         long dataCenterId = (uid << (timestampBits + signBits)) >>> (totalBits - datacenterIdBits);
@@ -200,10 +203,13 @@ public class SnowflakeIdWorker {
     public String parseUID(String uid) {
         uid = Long.toBinaryString(Long.parseLong(uid));
         int len = uid.length();
-        // 解析Uid：标识 -- 时间戳 -- 数据中心 -- 机器码 --序列
-        int sequenceStart = len < workerIdShift ? 0 : (int)(len - workerIdShift);// sequence起始数
-        int workerStart = len < datacenterIdShift ? 0 : (int)(len - datacenterIdShift);// worker起始数
-        int timeStart = len < timestampLeftShift ? 0 : (int)(len - timestampLeftShift);// 时间起始数
+        /* 解析Uid：标识 -- 时间戳 -- 数据中心 -- 机器码 --序列 */
+        // sequence起始数
+        int sequenceStart = len < workerIdShift ? 0 : (int)(len - workerIdShift);
+        // worker起始数
+        int workerStart = len < datacenterIdShift ? 0 : (int)(len - datacenterIdShift);
+        // 时间起始数
+        int timeStart = len < timestampLeftShift ? 0 : (int)(len - timestampLeftShift);
         String sequence = uid.substring(sequenceStart, len);
         String workerId = sequenceStart == 0 ? "0" : uid.substring(workerStart, sequenceStart);
         String dataCenterId = workerStart == 0 ? "0" : uid.substring(timeStart, workerStart);

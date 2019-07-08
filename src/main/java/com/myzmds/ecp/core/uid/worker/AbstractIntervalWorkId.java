@@ -80,7 +80,8 @@ public abstract class AbstractIntervalWorkId implements WorkerIdAssigner, Initia
              * 3、获取本地时间，跟uid 机器节点心跳列表的时间平均值做比较(uid 机器节点心跳列表 用于存储活跃节点的上报时间，每隔一段时间上报一次临时节点时间)
              */
             long diff = System.currentTimeMillis() - action();
-            if (diff < 0) {// 当前时间小于活跃节点的平均心跳时间，证明出现时间回拨，进入等待。
+            if (diff < 0) {
+                // 当前时间小于活跃节点的平均心跳时间，证明出现时间回拨，进入等待。
                 WorkerIdUtils.sleepMs(interval * 2, diff);
             }
             if (null != workerId) {

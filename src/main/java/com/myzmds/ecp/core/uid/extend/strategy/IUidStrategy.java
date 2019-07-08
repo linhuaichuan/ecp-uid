@@ -30,6 +30,7 @@ public interface IUidStrategy {
      * @方法名称 getUID
      * @功能描述 <pre>获取ID</pre>
      * @param group 分组
+     * @return id
      */
     public long getUID(String group);
 

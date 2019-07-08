@@ -117,7 +117,8 @@ public class TwitterSnowflakeStrategy implements IUidStrategy {
         mpid.append(dataCenterId);
         String name = ManagementFactory.getRuntimeMXBean().getName();
         if (null != name && !"".equals(name)) {
-            mpid.append(name.split("@")[0]);// 获取 jvmPid
+            // 获取 jvm Pid
+            mpid.append(name.split("@")[0]);
         }
         // dataCenterId + PID 的 hashcode 获取16个低位
         return (mpid.toString().hashCode() & 0xffff) % (maxWorkerId + 1);
@@ -138,7 +139,7 @@ public class TwitterSnowflakeStrategy implements IUidStrategy {
     public void setDatacenterId(Long datacenterId) {
         this.datacenterId = datacenterId;
     }
-
+    
     public void setAssigner(WorkerIdAssigner assigner) {
         this.assigner = assigner;
     }

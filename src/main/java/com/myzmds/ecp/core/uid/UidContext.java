@@ -43,7 +43,7 @@ public class UidContext {
      * @方法名称 getUidStr
      * @功能描述 <pre>获取ID</pre>
      */
-    public String getUidStr(){
+    public String getUidStr() {
         return getUidStr(EMPTY_STR);
     }
     
@@ -60,7 +60,7 @@ public class UidContext {
      * @方法名称 getUID
      * @功能描述 <pre>获取ID</pre>
      */
-    public long getUID(){
+    public long getUID() {
         return getUID(EMPTY_STR);
     }
     
@@ -69,10 +69,10 @@ public class UidContext {
      * @功能描述 <pre>获取ID</pre>
      * @param group 分组
      */
-    public long getUID(String group){
+    public long getUID(String group) {
         return geneId(uidStrategy.getUID(group));
     }
-
+    
     /**
      * @方法名称 parseUID
      * @功能描述 <pre>解析ID</pre>
@@ -114,7 +114,7 @@ public class UidContext {
     public String parseUID(String uid, String group) {
         return parseUID(Long.valueOf(uid.replaceFirst("[^(0-9)]*", "")), group);
     }
-
+    
     /**
      * 根据基因因子生成基因id
      */
@@ -123,7 +123,8 @@ public class UidContext {
             return primitiveId;
         }
         int moveBit = Integer.toBinaryString(fixed).length() - 1;
-        return (primitiveId << moveBit) | (factor % fixed); // 加入factor基因
+        // 加入factor基因
+        return (primitiveId << moveBit) | (factor % fixed);
     }
     
     /**
@@ -144,19 +145,19 @@ public class UidContext {
     public void setUidStrategy(IUidStrategy uidStrategy) {
         this.uidStrategy = uidStrategy;
     }
-
+    
     public Integer getFixed() {
         return fixed;
     }
-
+    
     public void setFixed(Integer fixed) {
         this.fixed = fixed;
     }
-
+    
     public Long getFactor() {
         return factor;
     }
-
+    
     public void setFactor(Long factor) {
         this.factor = factor;
     }
