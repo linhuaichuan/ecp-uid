@@ -141,6 +141,9 @@ public class ZkSharedLock implements ISharedLock {
         while (!haveTheLock) {
             // 重新获取列表
             children = getSortLockNode();
+            if (null == children) {
+                return false;
+            }
             /**
              * 2、检验是否未最小节点，是则获取锁
              */

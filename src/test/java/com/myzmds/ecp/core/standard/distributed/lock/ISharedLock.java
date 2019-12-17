@@ -56,7 +56,7 @@ public interface ISharedLock extends Closeable {
      * @方法名称 acquire
      * @功能描述 <pre>竞争锁,并自动续租</pre>
      * @param ttl 锁过期时间，单位毫秒
-     * @return true-获取锁，false-为获得锁
+     * @return true-获取锁，false-未获得锁
      * @throws RuntimeException 操作锁失败，需要业务判断是否重试 
      */
     default boolean acquire(int ttl)
@@ -73,7 +73,7 @@ public interface ISharedLock extends Closeable {
      * @方法名称 lock
      * @功能描述 <pre>获取锁</pre>
      * @param ttl 锁过期时间，单位毫秒
-     * @return true-获取锁，false-为获得锁
+     * @return true-获取锁，false-未获得锁
      * @throws RuntimeException 操作锁失败，需要业务判断是否重试 
      */
     boolean lock(int ttl)
@@ -84,7 +84,7 @@ public interface ISharedLock extends Closeable {
      * @功能描述 <pre>竞争锁或等待锁</pre>
      * @param ttl 锁过期时间，单位毫秒
      * @param waitTime 等待时间，单位毫秒
-     * @return true-获取锁，false-为获得锁
+     * @return true-获取锁，false-未获得锁
      * @throws InterruptedException 
      * @throws RuntimeException 操作锁失败，需要业务判断是否重试 
      */
