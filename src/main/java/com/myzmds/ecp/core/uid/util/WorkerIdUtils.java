@@ -40,7 +40,7 @@ public class WorkerIdUtils {
             try {
                 socket = new ServerSocket(pidPort);
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("接口占用失败！");
             }
         }
         return pidName + WorkerIdUtils.WORKER_SPLIT + pidPort;

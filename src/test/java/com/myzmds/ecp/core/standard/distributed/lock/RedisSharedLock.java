@@ -96,7 +96,7 @@ public class RedisSharedLock implements ISharedLock {
     public boolean lock(int ttl)
         throws RuntimeException {
         this.ttl = ttl;
-        // 锁不存在时：上锁并过期时间，并跳出。
+        // 锁不存在时：上锁并过期时间，最后跳出。
         Long result = redisTemplate.execute(new RedisScript<Long>() {
             @Override
             public String getSha1() {

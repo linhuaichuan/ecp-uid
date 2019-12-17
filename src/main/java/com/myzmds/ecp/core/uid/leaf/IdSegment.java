@@ -70,7 +70,7 @@ public class IdSegment {
     
     public Long getMiddleId() {
         if (this.middleId == null) {
-            this.middleId = this.maxId - (long)Math.round(step / 2);
+            this.middleId = this.maxId - (step / 2);
         }
         return middleId;
     }

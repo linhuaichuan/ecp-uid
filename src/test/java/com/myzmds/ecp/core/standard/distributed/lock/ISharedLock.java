@@ -53,11 +53,6 @@ public interface ISharedLock extends Closeable {
     public final static String MSG_LOCK_TIMEOUT = "{}取锁超时";
     
     /**
-     * 等待锁错误日志
-     */
-    public final static String MSG_WAIT_MSG = "等待锁错误：%s";
-    
-    /**
      * @方法名称 acquire
      * @功能描述 <pre>竞争锁,并自动续租</pre>
      * @param ttl 锁过期时间，单位毫秒
