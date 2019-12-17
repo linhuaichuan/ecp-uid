@@ -219,6 +219,13 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<optional>true</optional>
+			<version>1.2.58</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- junit 多线程测试 -->
 		<dependency>
 			<groupId>net.sourceforge.groboutils</groupId>
