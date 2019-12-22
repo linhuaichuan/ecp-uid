@@ -39,7 +39,12 @@ public class ZkSharedLock implements ISharedLock {
     /**
      * 最大重试次数
      */
-    private static final Integer MAX_RETRY_COUNT = 10;
+    private final static Integer MAX_RETRY_COUNT = 10;
+    
+    /**
+     * zk连接
+     */
+    public final static String MSG_CON = "zk获取连接成功！";
     
     /**
      * zk客户端
@@ -171,7 +176,14 @@ public class ZkSharedLock implements ISharedLock {
             
             // 查询前一个目录是否存在，并且注册目录事件监听器，监听一次事件后即删除
             try {
-                Stat state = client.exists(prevNodePath, true);
+                Stat state = client.exists(prevNodePath, new Watcher() {
+                    @Override
+                    public void process(WatchedEvent event) {
+                        if (event.getType().equals(EventType.NodeDeleted) && null != latch) {
+                            latch.countDown();
+                        }
+                    }
+                });
                 if (null == state) {
                     continue;
                 }
@@ -185,7 +197,7 @@ public class ZkSharedLock implements ISharedLock {
                     return false;
                 }
                 // 等待
-                latch.await(waitTime, TimeUnit.MICROSECONDS);
+                latch.await(waitTime < client.getSessionTimeout() - 10 ? waitTime : client.getSessionTimeout() - 10, TimeUnit.MICROSECONDS);
             } catch (KeeperException | InterruptedException e) {
                 // ignore
             }
@@ -260,8 +272,8 @@ public class ZkSharedLock implements ISharedLock {
             client = new ZooKeeper(connectIp, 300000, new Watcher() {
                 @Override
                 public void process(WatchedEvent event) {
-                    if (event.getType().equals(EventType.NodeDeleted) && null != latch) {
-                        latch.countDown();
+                    if (Event.KeeperState.SyncConnected == event.getState()) {
+                        logger.debug(MSG_CON);
                     }
                 }
             });
