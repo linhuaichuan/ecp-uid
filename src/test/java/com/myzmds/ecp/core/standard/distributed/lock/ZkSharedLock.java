@@ -17,7 +17,7 @@ import org.springframework.util.Assert;
 
 /**
  * @类名称 ZkSharedLock.java
- * @类描述 <pre>zk分布式锁(有缺陷，原生zkclient监听处理不完善)：支持等待锁，竞争锁；天然自动续租/释放资源，轮训检测；CP模式，强一致性</pre>
+ * @类描述 <pre>zk分布式锁：支持等待锁，竞争锁；天然自动续租/释放资源，轮训检测；CP模式，强一致性</pre>
  * @作者 庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年12月16日 下午4:38:11
  * @版本 1.0.0
@@ -196,8 +196,9 @@ public class ZkSharedLock implements ISharedLock {
                     client.close();
                     return false;
                 }
+                long maxWait = waitTime < client.getSessionTimeout() - 10 ? waitTime : client.getSessionTimeout() - 10;
                 // 等待
-                latch.await(waitTime < client.getSessionTimeout() - 10 ? waitTime : client.getSessionTimeout() - 10, TimeUnit.MICROSECONDS);
+                latch.await(maxWait, TimeUnit.MICROSECONDS);
             } catch (KeeperException | InterruptedException e) {
                 // ignore
             }
