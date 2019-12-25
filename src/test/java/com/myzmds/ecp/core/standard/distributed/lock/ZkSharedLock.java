@@ -125,8 +125,7 @@ public class ZkSharedLock implements ISharedLock {
     }
     
     @Override
-    public boolean acquireOrWait(int ttl, int waitTime)
-        throws InterruptedException {
+    public boolean acquireOrWait(int ttl, int waitTime) {
         initClient();
         /**
          * 1、获取锁的所有竞争者列表

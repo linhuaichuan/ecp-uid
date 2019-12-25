@@ -85,14 +85,17 @@ public interface ISharedLock extends Closeable {
      * @param ttl 锁过期时间，单位毫秒
      * @param waitTime 等待时间，单位毫秒
      * @return true-获取锁，false-未获得锁
-     * @throws InterruptedException 
      * @throws RuntimeException 操作锁失败，需要业务判断是否重试 
      */
     default boolean acquireOrWait(int ttl, int waitTime)
-        throws InterruptedException, RuntimeException {
+        throws RuntimeException {
         while (!lock(ttl)) {
             waitTime = waitTime - ttl / 2;
-            Thread.sleep(ttl / 2);
+            try {
+                Thread.sleep(ttl / 2);
+            } catch (InterruptedException e) {
+                // 忽略睡眠异常
+            }
             if (waitTime <= 0) {
                 logger.debug(MSG_LOCK_TIMEOUT, getName());
                 return false;
