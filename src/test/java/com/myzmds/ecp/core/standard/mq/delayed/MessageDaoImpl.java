@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 /**
  * @类名称 MessageDaoImpl.java
  * @类描述 <pre>消息数据接口实现类：依赖spring-jdbc框架，可替换</pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年12月25日 下午3:21:42
  * @版本 1.0.0
  *

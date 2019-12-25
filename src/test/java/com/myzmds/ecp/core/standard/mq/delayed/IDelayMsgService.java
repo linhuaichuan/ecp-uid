@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * @类名称 IDelayeQueue.java
  * @类描述 <pre>延迟队列接口</pre>
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @版本 1.0.0
  *
  * @修改记录

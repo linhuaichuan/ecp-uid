@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 /**
  * @类名称 RedisDelayeTimeRound.java
  * @类描述 <pre>redis延时消息时间轮</pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年12月25日 下午3:22:29
  * @版本 1.0.0
  *

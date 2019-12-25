@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 /**
  * @类名称 RedisDelayeQueue.java
  * @类描述 <pre>reids 延迟消息服务</pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年12月25日 上午11:04:45
  * @版本 1.0.0
  *

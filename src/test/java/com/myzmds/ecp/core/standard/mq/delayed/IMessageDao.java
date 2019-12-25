@@ -6,6 +6,7 @@ import java.util.List;
  * @类名称 IMessageDao.java
  * @类描述 <pre>消息数据接口</pre>
  * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年12月25日 下午3:21:27
  * @版本 1.0.0
  *

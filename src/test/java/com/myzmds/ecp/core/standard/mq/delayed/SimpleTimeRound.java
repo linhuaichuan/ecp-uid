@@ -14,7 +14,7 @@ import com.myzmds.ecp.core.uid.baidu.utils.NamingThreadFactory;
 /**
  * @类名称 SimpleTimeRound.java
  * @类描述 <pre>简单时间轮实现-单轮时间轮</pre>
- * @作者  庄梦蝶殇 linhuaichuan@veredholdings.com
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @创建时间 2019年12月25日 下午3:23:17
  * @版本 1.0.0
  *

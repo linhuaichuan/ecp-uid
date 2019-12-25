@@ -3,6 +3,7 @@ package com.myzmds.ecp.core.standard.mq.delayed;
 /**
  * @类名称 Message.java
  * @类描述 <pre>消息体对象</pre>
+ * @作者  庄梦蝶殇 linhuaichuan1989@126.com
  * @版本 1.0.0
  *
  * @修改记录
