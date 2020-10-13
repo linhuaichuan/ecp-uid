@@ -36,7 +36,7 @@
 		<zookeeper.version>3.4.14</zookeeper.version>
 
 		<lombok.version>1.18.4</lombok.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 	</properties>
 
 	<build>
