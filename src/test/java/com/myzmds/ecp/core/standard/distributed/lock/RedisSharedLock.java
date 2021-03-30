@@ -1,5 +1,7 @@
 package com.myzmds.ecp.core.standard.distributed.lock;
 
+import java.util.Random;
+import java.util.UUID;
 import java.util.Collections;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -79,11 +81,17 @@ public class RedisSharedLock implements ISharedLock {
     public String lockKey;
     
     /**
+     * 锁值，即value值
+     */
+    public String lockValue;
+    
+    /**
      * 锁过期时间，毫秒
      */
     public int ttl;
     
     public RedisSharedLock(String name) {
+        lockValue = UUID.randomUUID().toString();
         lockKey = getLockKey(name);
     }
     
@@ -113,7 +121,7 @@ public class RedisSharedLock implements ISharedLock {
                 return SCRIPT_LOCK;
             }
             
-        }, Collections.singletonList(lockKey), "1", String.valueOf(ttl));
+        }, Collections.singletonList(lockKey), lockValue, String.valueOf(ttl));
         if (SUCCESS.equals(result)) {
             return true;
         }
@@ -149,7 +157,7 @@ public class RedisSharedLock implements ISharedLock {
                     public String getSha1() {
                         return SCRIPT_UNLOCK_SHA1;
                     }
-                }, Collections.singletonList(lockKey), "1");
+                }, Collections.singletonList(lockKey), lockValue);
             } catch (Exception e) {
                 logger.warn(WARN_MSG_EVAL, e.getMessage());
                 redisTemplate.delete(lockKey);
