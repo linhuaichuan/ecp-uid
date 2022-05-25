@@ -28,7 +28,7 @@
 		<java.version>1.8</java.version>
 		
 		<commons-lang3.version>3.5</commons-lang3.version>
-		<org.springframework.version>4.3.19.RELEASE</org.springframework.version>
+		<org.springframework.version>5.2.22.RELEASE</org.springframework.version>
 		<org.springframework.data.version>1.8.15.RELEASE</org.springframework.data.version>
 		
 		<mysql.version>5.1.47</mysql.version>
